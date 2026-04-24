@@ -106,6 +106,78 @@ export function Navbar() {
   }))
   const primaryTask = SITE_CONFIG.tasks.find((task) => task.key === recipe.primaryTask && task.enabled) || primaryNavigation[0]
   const isDirectoryProduct = recipe.homeLayout === 'listing-home' || recipe.homeLayout === 'classified-home'
+  const isProfileProduct = recipe.primaryTask === 'profile'
+
+  if (isProfileProduct) {
+    const profileLinks = [
+      { name: 'Link in bio', href: '/profile' },
+      { name: 'Developers', href: '/developers' },
+      { name: 'Support', href: '/help' },
+    ] as const
+
+    return (
+      <header className="sticky top-0 z-50 w-full border-b border-slate-200/90 bg-white text-slate-950 shadow-[0_1px_0_rgba(15,23,42,0.05)]">
+        <nav className="mx-auto flex h-[72px] max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
+          <div className="flex min-w-0 flex-1 items-center gap-8">
+            <Link href="/" className="flex shrink-0 items-center gap-2.5">
+              <div className="flex h-10 w-10 items-center justify-center overflow-hidden rounded-xl border border-slate-200 bg-white p-1">
+                <img src="/favicon.png?v=20260401" alt="" width={40} height={40} className="h-full w-full object-contain" />
+              </div>
+              <span className="truncate text-lg font-bold tracking-[-0.02em]">{SITE_CONFIG.name}</span>
+            </Link>
+            <div className="hidden items-center gap-7 md:flex">
+              {profileLinks.map((item) => {
+                const isActive = pathname === item.href || (item.href === '/profile' && pathname.startsWith('/profile'))
+                return (
+                  <Link key={item.name} href={item.href} className={cn('text-sm font-medium', isActive ? 'text-slate-950' : 'text-slate-500 hover:text-slate-900')}>
+                    {item.name}
+                  </Link>
+                )
+              })}
+            </div>
+          </div>
+          <div className="flex items-center gap-2 sm:gap-3">
+            {isAuthenticated ? (
+              <NavbarAuthControls />
+            ) : (
+              <>
+                <Button variant="outline" size="sm" asChild className="h-9 rounded-lg border-slate-300 bg-white px-4 text-sm font-semibold text-[#2156CC] hover:bg-slate-50">
+                  <Link href="/login">Log in</Link>
+                </Button>
+                <Button size="sm" asChild className="h-9 rounded-lg border-0 bg-[#2156CC] px-4 text-sm font-semibold text-white shadow-sm hover:bg-[#1a4aad]">
+                  <Link href="/register">Get started now</Link>
+                </Button>
+              </>
+            )}
+            <Button variant="ghost" size="icon" className="rounded-lg md:hidden" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} aria-label="Open menu">
+              {isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            </Button>
+          </div>
+        </nav>
+        {isMobileMenuOpen ? (
+          <div className="border-t border-slate-200 bg-white md:hidden">
+            <div className="space-y-1 px-4 py-3">
+              {profileLinks.map((item) => (
+                <Link key={item.name} href={item.href} onClick={() => setIsMobileMenuOpen(false)} className="block rounded-lg px-3 py-2.5 text-sm font-medium text-slate-700">
+                  {item.name}
+                </Link>
+              ))}
+              {isAuthenticated ? null : (
+                <div className="mt-2 flex flex-col gap-2">
+                  <Link href="/login" onClick={() => setIsMobileMenuOpen(false)} className="block rounded-lg border border-slate-200 py-2.5 text-center text-sm font-semibold text-[#2156CC]">
+                    Log in
+                  </Link>
+                  <Link href="/register" onClick={() => setIsMobileMenuOpen(false)} className="block rounded-lg bg-[#2156CC] py-2.5 text-center text-sm font-semibold text-white">
+                    Get started now
+                  </Link>
+                </div>
+              )}
+            </div>
+          </div>
+        ) : null}
+      </header>
+    )
+  }
 
   if (isDirectoryProduct) {
     const palette = directoryPalette[(recipe.brandPack === 'market-utility' ? 'market-utility' : 'directory-clean') as keyof typeof directoryPalette]

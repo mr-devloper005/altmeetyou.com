@@ -61,19 +61,36 @@ export function Footer() {
   const primaryTask = enabledTasks.find((task) => task.key === recipe.primaryTask) || enabledTasks[0]
 
   if (recipe.footer === 'minimal-footer') {
+    const isProfile = recipe.primaryTask === 'profile'
+    const bar = isProfile ? 'border-slate-200/90 bg-white text-slate-900' : 'border-[#d7deca] bg-[#f4f6ef] text-[#1f2617]'
+    const sub = isProfile ? 'text-slate-500' : 'text-[#56604b]'
+    const btn = isProfile
+      ? 'rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-800 hover:bg-slate-50'
+      : 'rounded-lg border border-[#d7deca] bg-white px-3 py-2 text-sm font-medium text-[#1f2617] hover:bg-[#ebefdf]'
+
     return (
-      <footer className="border-t border-[#d7deca] bg-[#f4f6ef] text-[#1f2617]">
+      <footer className={`border-t ${bar}`}>
         <div className="mx-auto flex max-w-7xl flex-col gap-5 px-4 py-8 sm:px-6 lg:flex-row lg:items-center lg:justify-between lg:px-8">
           <div>
             <p className="text-lg font-semibold">{SITE_CONFIG.name}</p>
-            <p className="mt-1 text-sm text-[#56604b]">{SITE_CONFIG.description}</p>
+            <p className={`mt-1 text-sm ${sub}`}>{SITE_CONFIG.description}</p>
           </div>
           <div className="flex flex-wrap gap-3">
             {enabledTasks.slice(0, 5).map((task) => (
-              <Link key={task.key} href={task.route} className="rounded-lg border border-[#d7deca] bg-white px-3 py-2 text-sm font-medium text-[#1f2617] hover:bg-[#ebefdf]">
+              <Link key={task.key} href={task.route} className={btn}>
                 {task.label}
               </Link>
             ))}
+            {isProfile ? (
+              <>
+                <Link href="/help" className={btn}>
+                  Support
+                </Link>
+                <Link href="/developers" className={btn}>
+                  Developers
+                </Link>
+              </>
+            ) : null}
           </div>
         </div>
       </footer>
