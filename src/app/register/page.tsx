@@ -1,12 +1,25 @@
 import Link from 'next/link'
-import { Bookmark, Building2, FileText, Image as ImageIcon, Sparkles } from 'lucide-react'
+import { Bookmark, Building2, FileText, Image as ImageIcon, Sparkles, User } from 'lucide-react'
 import { NavbarShell } from '@/components/shared/navbar-shell'
 import { Footer } from '@/components/shared/footer'
 import { getFactoryState } from '@/design/factory/get-factory-state'
 import { getProductKind } from '@/design/factory/get-product-kind'
 import { REGISTER_PAGE_OVERRIDE_ENABLED, RegisterPageOverride } from '@/overrides/register-page'
+import { RegisterForm } from '@/components/auth/register-form'
 
 function getRegisterConfig(kind: ReturnType<typeof getProductKind>) {
+  if (kind === 'profile') {
+    return {
+      shell: 'bg-[#FDF5E6] text-slate-950',
+      panel: 'border border-slate-200/80 bg-white shadow-[0_24px_64px_rgba(0,0,0,0.06)]',
+      side: 'border border-slate-200/60 bg-white/80',
+      muted: 'text-slate-600',
+      action: 'bg-[#2156CC] text-white hover:bg-[#1a4aad]',
+      icon: User,
+      title: 'Create your public profile',
+      body: 'Set your name, email, and password. You can add your photo, bio, and links from the dashboard after sign-up.',
+    }
+  }
   if (kind === 'directory') {
     return {
       shell: 'bg-[#f8fbff] text-slate-950',
@@ -82,14 +95,8 @@ export default function RegisterPage() {
           </div>
 
           <div className={`rounded-[2rem] p-8 ${config.panel}`}>
-            <p className="text-xs font-semibold uppercase tracking-[0.24em] opacity-70">Create account</p>
-            <form className="mt-6 grid gap-4">
-              <input className="h-12 rounded-xl border border-current/10 bg-transparent px-4 text-sm" placeholder="Full name" />
-              <input className="h-12 rounded-xl border border-current/10 bg-transparent px-4 text-sm" placeholder="Email address" />
-              <input className="h-12 rounded-xl border border-current/10 bg-transparent px-4 text-sm" placeholder="Password" type="password" />
-              <input className="h-12 rounded-xl border border-current/10 bg-transparent px-4 text-sm" placeholder="What are you creating or publishing?" />
-              <button type="submit" className={`inline-flex h-12 items-center justify-center rounded-full px-6 text-sm font-semibold ${config.action}`}>Create account</button>
-            </form>
+            <p className="text-xs font-semibold uppercase tracking-[0.24em] text-slate-500">Create account</p>
+            <RegisterForm actionClassName={config.action} errorHintClassName="text-red-600" />
             <div className={`mt-6 flex items-center justify-between text-sm ${config.muted}`}>
               <span>Already have an account?</span>
               <Link href="/login" className="inline-flex items-center gap-2 font-semibold hover:underline">

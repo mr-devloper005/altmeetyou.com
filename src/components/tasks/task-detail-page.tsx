@@ -227,7 +227,10 @@ export async function TaskDetailPage({ task, slug }: { task: TaskKey; slug: stri
   const { recipe } = getFactoryState();
   const productKind = getProductKind(recipe);
 
-  if (productKind === "directory" && (task === "listing" || task === "classified" || task === "profile")) {
+  if (
+    (productKind === "directory" && (task === "listing" || task === "classified" || task === "profile")) ||
+    (productKind === "profile" && task === "profile")
+  ) {
     return (
       <div className="min-h-screen bg-[#f8fbff]">
         <NavbarShell />

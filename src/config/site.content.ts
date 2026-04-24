@@ -2,77 +2,76 @@ import type { TaskKey } from '@/lib/site-config'
 
 export const siteContent = {
   navbar: {
-    tagline: 'Independent reading platform',
+    tagline: 'Link-in-bio and public identity',
   },
   footer: {
-    tagline: 'Stories, resources, and discoverable posts',
+    tagline: 'Public profiles, verified links, one place to update',
   },
   hero: {
-    badge: 'Latest stories and visuals',
-    title: ['A thoughtful home for', 'stories, visuals, and discovery.'],
-    description:
-      'Explore fresh articles, image-led posts, and discoverable content across the platform through a calmer and clearer browsing experience.',
+    badge: 'Public profiles',
+    title: ['A simple home for', 'your link-in-bio and identity.'],
+    description: 'Build one profile, show your best links, and make it easy for people to know who you are and where to go next.',
     primaryCta: {
-      label: 'Read latest stories',
-      href: '/articles',
-    },
-    secondaryCta: {
-      label: 'Explore visuals',
-      href: '/images',
-    },
-    searchPlaceholder: 'Search stories, visuals, listings, and more',
-    focusLabel: 'Focus',
-    featureCardBadge: 'latest cover rotation',
-    featureCardTitle: 'Latest posts shape the visual identity of the homepage.',
-    featureCardDescription:
-      'Recent images and stories stay at the center of the experience without changing any core platform behavior.',
-  },
-  home: {
-    metadata: {
-      title: 'Stories, visuals, and discoverable content',
-      description:
-        'Explore articles, images, listings, and curated posts through a cleaner reading-first experience.',
-      openGraphTitle: 'Stories, visuals, and discoverable content',
-      openGraphDescription:
-        'Discover articles, visual posts, and connected content through a calmer reading-first experience.',
-      keywords: ['story platform', 'article site', 'visual content', 'content discovery'],
-    },
-    introBadge: 'About the platform',
-    introTitle: 'Built for reading, browsing, and connecting different kinds of content.',
-    introParagraphs: [
-      'This site brings together article-style reading, visual browsing, and structured discovery so visitors can move naturally between different content types.',
-      'Instead of separating stories, visuals, and supporting resources into disconnected surfaces, the platform keeps them connected in one place with consistent navigation and easier exploration.',
-      'Whether someone starts with a story, an image-led post, a listing, or a resource page, they can keep discovering related content without friction.',
-    ],
-    sideBadge: 'At a glance',
-    sidePoints: [
-      'Reading-first homepage with stronger emphasis on stories and imagery.',
-      'Connected sections for articles, visuals, listings, and supporting resources.',
-      'Cleaner browsing rhythm designed to make exploration feel easier.',
-      'Lightweight interactions that keep the experience fast and readable.',
-    ],
-    primaryLink: {
-      label: 'Browse articles',
-      href: '/articles',
-    },
-    secondaryLink: {
-      label: 'See visuals',
-      href: '/images',
-    },
-  },
-  cta: {
-    badge: 'Start exploring',
-    title: 'Explore articles, visuals, and resources through one connected experience.',
-    description:
-      'Move between articles, image-led posts, listings, and resources through one clearer and more connected visual system.',
-    primaryCta: {
-      label: 'Get Started Free',
+      label: 'Get started',
       href: '/register',
     },
     secondaryCta: {
-      label: 'Contact Sales',
+      label: 'Browse profiles',
+      href: '/profile',
+    },
+    searchPlaceholder: 'Search public profiles and names',
+    focusLabel: 'Focus',
+    featureCardBadge: 'Public page',
+    featureCardTitle: 'One place to list your important links and story.',
+    featureCardDescription: 'Update your details once, then point visitors to the destinations you care about most.',
+  },
+  home: {
+    metadata: {
+      title: 'Public profiles and link-in-bio',
+      description: 'Build a free profile, share your links, and keep your identity easy to find across the web.',
+      openGraphTitle: 'Your profile for the web',
+      openGraphDescription: 'Create a public profile, add a photo and bio, and point visitors to the links that matter.',
+      keywords: ['profile', 'link in bio', 'public page', 'creator page', 'identity', 'altmeetyou'],
+    },
+    introBadge: 'About the platform',
+    introTitle: 'Public profiles, clear story, the links you choose.',
+    introParagraphs: [
+      'The platform is built around a single, portable identity: your photo, short introduction, and the places you want people to visit.',
+      'Visitors find you through browse and search, then get a legible, mobile-friendly page you control.',
+      'We focus the experience on that profile so there is no clutter from unrelated product categories.',
+    ],
+    sideBadge: 'At a glance',
+    sidePoints: [
+      'A calm homepage that shows how a modern profile and link list should look.',
+      'Emphasis on trust signals and clear calls to action visitors can use immediately.',
+      'A navigation model centered on profiles, support, and your account.',
+      'Lightweight, fast pages that work well on small screens first.',
+    ],
+    primaryLink: {
+      label: 'Browse profiles',
+      href: '/profile',
+    },
+    secondaryLink: {
+      label: 'Create your page',
+      href: '/register',
+    },
+  },
+  cta: {
+    badge: 'Start with your profile',
+    title: 'Create a public profile and share your best links in one place.',
+    description: 'Set your photo, short bio, and the destinations you want people to use — from portfolio to store to social.',
+    primaryCta: {
+      label: 'Get started free',
+      href: '/register',
+    },
+    secondaryCta: {
+      label: 'Contact us',
       href: '/contact',
     },
+  },
+  profileLanding: {
+    heroSubtext:
+      'Transform your public identity into a simple page — one avatar, one bio, social connections, and verified links.',
   },
   taskSectionHeading: 'Latest {label}',
   taskSectionDescriptionSuffix: 'Browse the newest posts in this section.',
@@ -168,14 +167,14 @@ export const taskIntroCopy: Record<
   profile: {
     title: 'Profiles, identities, and public pages',
     paragraphs: [
-      'Profiles capture the identity behind a business, creator, brand, or project and help visitors understand who is behind the content they are exploring.',
-      'These pages work as trust anchors across the site and connect naturally with stories, listings, documents, and other post types.',
-      'Browse profiles to understand people and brands more clearly, then continue into related content from the same source.',
+      'Profiles capture the public identity of a creator, brand, or person and make it easy to add a short story plus the links that matter most.',
+      'Use your profile as a home base for the web: link to your work, your shop, or your other profiles from one place.',
+      'Browse the directory to discover people and organizations, or sign in to manage your own public page from the dashboard.',
     ],
     links: [
-      { label: 'Open listings', href: '/listings' },
-      { label: 'Read articles', href: '/articles' },
-      { label: 'Browse images', href: '/images' },
+      { label: 'Get started', href: '/register' },
+      { label: 'Help and support', href: '/help' },
+      { label: 'For developers', href: '/developers' },
     ],
   },
   sbm: {
