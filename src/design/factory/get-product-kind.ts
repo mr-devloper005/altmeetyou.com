@@ -1,8 +1,9 @@
 import type { SiteFactoryRecipe } from '@/design/factory/types'
 
-export type ProductKind = 'directory' | 'editorial' | 'visual' | 'curation'
+export type ProductKind = 'directory' | 'editorial' | 'visual' | 'curation' | 'profile'
 
 export function getProductKind(recipe: SiteFactoryRecipe): ProductKind {
+  if (recipe.primaryTask === 'profile') return 'profile'
   if (recipe.primaryTask === 'sbm') return 'curation'
   if (recipe.primaryTask === 'image') return 'visual'
   if (recipe.primaryTask === 'article') return 'editorial'

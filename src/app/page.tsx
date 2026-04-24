@@ -11,9 +11,10 @@ import { buildPageMetadata } from '@/lib/seo'
 import { fetchTaskPosts } from '@/lib/task-data'
 import { siteContent } from '@/config/site.content'
 import { getFactoryState } from '@/design/factory/get-factory-state'
-import { getProductKind, type ProductKind } from '@/design/factory/get-product-kind'
+import { getProductKind } from '@/design/factory/get-product-kind'
 import type { SitePost } from '@/lib/site-connector'
 import { HOME_PAGE_OVERRIDE_ENABLED, HomePageOverride } from '@/overrides/home-page'
+import { ProfileLanding } from '@/components/home/profile-landing'
 
 export const revalidate = 300
 
@@ -524,6 +525,7 @@ export default async function HomePage() {
     <div className="min-h-screen bg-background text-foreground">
       <NavbarShell />
       <SchemaJsonLd data={schemaData} />
+      {productKind === 'profile' ? <ProfileLanding profilePosts={profilePosts} /> : null}
       {productKind === 'directory' ? (
         <DirectoryHome
           primaryTask={primaryTask}
