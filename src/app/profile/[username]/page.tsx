@@ -5,11 +5,14 @@ import { NavbarShell } from "@/components/shared/navbar-shell";
 import { ContentImage } from "@/components/shared/content-image";
 import { TaskPostCard } from "@/components/shared/task-post-card";
 import { Button } from "@/components/ui/button";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { SchemaJsonLd } from "@/components/seo/schema-jsonld";
 import { buildPostUrl } from "@/lib/task-data";
 import { buildPostMetadata, buildTaskMetadata } from "@/lib/seo";
 import { fetchTaskPostBySlug, fetchTaskPosts } from "@/lib/task-data";
 import { SITE_CONFIG } from "@/lib/site-config";
+import { FileText, MessageSquare } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 export const revalidate = 3;
 
@@ -106,55 +109,143 @@ export default async function ProfileDetailPage({ params }: { params: Promise<{ 
     ],
   };
 
+  // Mock stats for profile (would come from real data in production)
+  const following = 0;
+  const followers = 3 + Math.floor(Math.random() * 2); // Random 3-4 followers
+
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#2d3436]">
       <NavbarShell />
-      <main className="mx-auto w-full max-w-6xl px-4 pb-16 pt-10 sm:px-6 lg:px-8">
+      <main className="mx-auto w-full max-w-5xl px-4 pb-16 pt-8 sm:px-6 lg:px-8">
         <SchemaJsonLd data={breadcrumbData} />
-        <section className="rounded-3xl border border-border/60 bg-white/90 p-8 shadow-sm md:p-12">
-          <div className="grid gap-8 md:grid-cols-[200px_1fr] md:items-start">
-            <div className="flex justify-center md:justify-start">
-              <div className="relative h-36 w-36 overflow-hidden rounded-full border border-border/70 bg-muted">
+        
+        {/* Profile Header Card */}
+        <section className="rounded-xl bg-[#363d3f] p-6 sm:p-8">
+          {/* Top Row: Avatar + Name + Follow Button */}
+          <div className="flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between">
+            <div className="flex items-start gap-4 sm:gap-6">
+              {/* Avatar */}
+              <div className="relative h-24 w-24 flex-shrink-0 overflow-hidden rounded-full border-2 border-[#4a5255] bg-[#4a0e0e] sm:h-28 sm:w-28">
                 {logoUrl ? (
-                  <ContentImage src={logoUrl} alt={post.title} fill className="object-cover" sizes="144px" intrinsicWidth={144} intrinsicHeight={144} />
+                  <ContentImage 
+                    src={logoUrl} 
+                    alt={post.title} 
+                    fill 
+                    className="object-cover" 
+                    sizes="112px" 
+                    intrinsicWidth={112} 
+                    intrinsicHeight={112} 
+                  />
                 ) : (
-                  <div className="flex h-full w-full items-center justify-center text-3xl font-semibold text-muted-foreground">
-                    {post.title.slice(0, 1).toUpperCase()}
+                  <div className="flex h-full w-full items-center justify-center text-center text-sm font-medium text-white/90">
+                    {brandName.toLowerCase()}
                   </div>
                 )}
               </div>
-            </div>
-            <div>
-              <h1 className="text-3xl font-bold text-foreground sm:text-4xl">{brandName}</h1>
-              {domain ? (
-                <p className="mt-1 text-sm font-medium text-muted-foreground">{domain}</p>
-              ) : null}
-              <article
-                className="article-content prose prose-slate mt-6 max-w-2xl text-base leading-relaxed prose-p:my-4 prose-a:text-primary prose-a:underline prose-strong:font-semibold"
-                dangerouslySetInnerHTML={{ __html: descriptionHtml }}
-              />
-              {website ? (
-                <div className="mt-8">
-                  <Button asChild size="lg" className="px-7 text-base">
-                    <Link href={website} target="_blank" rel="noopener noreferrer">
-                      Visit Official Site
-                    </Link>
-                  </Button>
+              
+              {/* Profile Info */}
+              <div className="flex-1 pt-1">
+                <h1 className="text-2xl font-bold text-white sm:text-3xl">{brandName}</h1>
+                
+                {/* Stats Row */}
+                <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-[#a0a8ab]">
+                  <span className="flex items-center gap-1">
+                    <span className="text-[#74b9ff] font-medium">{following}</span>
+                    <span className="text-[#a0a8ab]">Following</span>
+                  </span>
+                  <span className="text-[#636e72]">|</span>
+                  <span className="flex items-center gap-1">
+                    <span className="text-[#74b9ff] font-medium">{followers}</span>
+                    <span className="text-[#a0a8ab]">Followers</span>
+                  </span>
                 </div>
-              ) : null}
+              </div>
             </div>
+            
+            {/* Follow Button - redirects to login */}
+            <Button 
+              asChild
+              className="h-8 rounded-md bg-[#00b894] px-4 text-sm font-medium text-white hover:bg-[#00a383] sm:h-9"
+            >
+              <Link href="/login">Follow</Link>
+            </Button>
           </div>
+          
+          {/* Description */}
+          <article
+            className="mt-5 text-[#dfe6e9] leading-relaxed"
+            dangerouslySetInnerHTML={{ __html: descriptionHtml }}
+          />
+          
+          {/* Website Link */}
+          {website && (
+            <div className="mt-4">
+              <Link 
+                href={website} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-[#74b9ff] hover:text-[#a29bfe] hover:underline transition-colors"
+              >
+                {website}
+              </Link>
+            </div>
+          )}
         </section>
 
+        {/* Tabs Section */}
+        <section className="mt-6">
+          <Tabs defaultValue="posts" className="w-full">
+            <TabsList className="grid w-full max-w-md grid-cols-2 bg-[#363d3f] p-1">
+              <TabsTrigger 
+                value="posts" 
+                className={cn(
+                  "flex items-center gap-2 rounded-md py-2.5 text-sm font-medium transition-all",
+                  "data-[state=active]:bg-[#00b894] data-[state=active]:text-white",
+                  "data-[state=inactive]:text-[#a0a8ab] data-[state=inactive]:hover:text-white"
+                )}
+              >
+                <FileText className="h-4 w-4" />
+                Posts
+              </TabsTrigger>
+              <TabsTrigger 
+                value="comments"
+                className={cn(
+                  "flex items-center gap-2 rounded-md py-2.5 text-sm font-medium transition-all",
+                  "data-[state=active]:bg-[#00b894] data-[state=active]:text-white",
+                  "data-[state=inactive]:text-[#a0a8ab] data-[state=inactive]:hover:text-white"
+                )}
+              >
+                <MessageSquare className="h-4 w-4" />
+                Comments
+              </TabsTrigger>
+            </TabsList>
+            
+            <TabsContent value="posts" className="mt-4">
+              {/* Empty Posts State */}
+              <div className="rounded-lg bg-[#2f3638] py-12 text-center">
+                <p className="text-[#a0a8ab]">User don&apos;t have published posts</p>
+              </div>
+            </TabsContent>
+            
+            <TabsContent value="comments" className="mt-4">
+              {/* Empty Comments State */}
+              <div className="rounded-lg bg-[#2f3638] py-12 text-center">
+                <p className="text-[#a0a8ab]">No comments yet</p>
+              </div>
+            </TabsContent>
+          </Tabs>
+        </section>
+
+        {/* Suggested Articles */}
         {suggestedArticles.length ? (
-          <section className="mt-12">
+          <section className="mt-10">
             <div className="flex items-center justify-between">
-              <h2 className="text-xl font-semibold text-foreground">Suggested articles</h2>
-              <Link href="/articles" className="text-sm font-medium text-primary hover:underline">
+              <h2 className="text-lg font-semibold text-white">Suggested articles</h2>
+              <Link href="/articles" className="text-sm font-medium text-[#74b9ff] hover:text-[#a29bfe] hover:underline">
                 View all
               </Link>
             </div>
-            <div className="mt-6 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {suggestedArticles.slice(0, 3).map((article) => (
                 <TaskPostCard
                   key={article.id}
@@ -164,26 +255,6 @@ export default async function ProfileDetailPage({ params }: { params: Promise<{ 
                 />
               ))}
             </div>
-            <nav className="mt-6 rounded-2xl border border-border bg-card/60 p-4">
-              <p className="text-sm font-semibold text-foreground">Related links</p>
-              <ul className="mt-2 space-y-2 text-sm">
-                {suggestedArticles.slice(0, 3).map((article) => (
-                  <li key={`related-${article.id}`}>
-                    <Link
-                      href={buildPostUrl("article", article.slug)}
-                      className="text-primary underline-offset-4 hover:underline"
-                    >
-                      {article.title}
-                    </Link>
-                  </li>
-                ))}
-                <li>
-                  <Link href="/profile" className="text-primary underline-offset-4 hover:underline">
-                    Browse all profiles
-                  </Link>
-                </li>
-              </ul>
-            </nav>
           </section>
         ) : null}
       </main>
