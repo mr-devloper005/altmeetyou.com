@@ -110,8 +110,8 @@ export function Navbar() {
 
   if (isProfileProduct) {
     const profileLinks = [
-      { name: 'Link in bio', href: '/profile' },
-      { name: 'Developers', href: '/developers' },
+      { name: 'About Us', href: '/about' },
+      { name: 'Contact Us', href: '/contact' },
       { name: 'Support', href: '/help' },
     ] as const
 
@@ -127,7 +127,7 @@ export function Navbar() {
             </Link>
             <div className="hidden items-center gap-7 md:flex">
               {profileLinks.map((item) => {
-                const isActive = pathname === item.href || (item.href === '/profile' && pathname.startsWith('/profile'))
+                const isActive = pathname === item.href
                 return (
                   <Link key={item.name} href={item.href} className={cn('text-sm font-medium', isActive ? 'text-slate-950' : 'text-slate-500 hover:text-slate-900')}>
                     {item.name}

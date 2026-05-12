@@ -234,21 +234,8 @@ export default function HelpPage() {
               Contact support <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
-          <div className="rounded-[16px] border border-slate-200 bg-white p-7">
-            <HelpCircle className="h-7 w-7 text-[#2156CC]" />
-            <h3 className="mt-4 text-xl font-bold text-slate-950">Building with us?</h3>
-            <p className="mt-2 text-sm leading-6 text-slate-600">
-              Read the developer guides for working with public profile data in your app.
-            </p>
-            <Link href="/developers" className="mt-5 inline-flex items-center gap-2 rounded-[10px] border border-slate-300 bg-white px-5 py-2.5 text-sm font-semibold text-[#2156CC] hover:bg-slate-50">
-              Open developer docs <ArrowRight className="h-4 w-4" />
-            </Link>
-          </div>
-        </div>
-        <div className="mt-10 flex items-center justify-center gap-2 text-xs text-slate-500">
-          <Mail className="h-3.5 w-3.5" /> support@altmeetyou.com
-        </div>
-      </section>
+                  </div>
+              </section>
 
       <Footer />
     </div>

@@ -1,3 +1,5 @@
+"use client";
+
 import Link from 'next/link'
 import { ArrowRight, BadgeCheck, Check } from 'lucide-react'
 import { ContentImage } from '@/components/shared/content-image'
@@ -111,12 +113,6 @@ export function ProfileLanding({ profilePosts }: ProfileLandingProps) {
               >
                 Get started now
                 <ArrowRight className="h-4 w-4" />
-              </Link>
-              <Link
-                href="/profile"
-                className="inline-flex items-center gap-2 rounded-[10px] border border-white/50 bg-white/10 px-5 py-3.5 text-sm font-semibold text-white backdrop-blur-sm hover:bg-white/15"
-              >
-                Browse profiles
               </Link>
             </div>
           </div>
@@ -272,14 +268,7 @@ export function ProfileLanding({ profilePosts }: ProfileLandingProps) {
                 Expose a stable profile object for your own apps, themes, and integrations. Start from the public profile model and
                 grow from there.
               </p>
-              <Link
-                href="/developers"
-                className="mt-8 inline-flex items-center gap-2 rounded-[10px] border border-white/40 px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-white/10"
-              >
-                Learn more about our APIs
-                <ArrowRight className="h-4 w-4" />
-              </Link>
-            </div>
+                          </div>
           </div>
         </div>
       </section>

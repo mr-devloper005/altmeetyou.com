@@ -19,22 +19,22 @@ const taskIcons: Record<TaskKey, any> = {
 }
 
 const footerLinks = {
-  platform: SITE_CONFIG.tasks.filter((task) => task.enabled).map((task) => ({
+  platform: SITE_CONFIG.tasks.filter((task) => task.enabled && task.key !== 'profile').map((task) => ({
     name: task.label,
     href: task.route,
     icon: taskIcons[task.key] || LayoutGrid,
   })),
   company: [
-    { name: 'About', href: '/about' },
+    { name: 'About Us', href: '/about' },
+    { name: 'Contact Us', href: '/contact' },
     { name: 'Team', href: '/team' },
     { name: 'Careers', href: '/careers' },
     { name: 'Blog', href: '/blog' },
     { name: 'Press', href: '/press' },
   ],
   resources: [
-    { name: 'Help Center', href: '/help' },
+    { name: 'Support', href: '/help' },
     { name: 'Community', href: '/community' },
-    { name: 'Developers', href: '/developers' },
     { name: 'Status', href: '/status' },
   ],
   legal: [
@@ -76,18 +76,21 @@ export function Footer() {
             <p className={`mt-1 text-sm ${sub}`}>{SITE_CONFIG.description}</p>
           </div>
           <div className="flex flex-wrap gap-3">
-            {enabledTasks.slice(0, 5).map((task) => (
+            {enabledTasks.filter((task) => task.key !== 'profile').slice(0, 5).map((task) => (
               <Link key={task.key} href={task.route} className={btn}>
                 {task.label}
               </Link>
             ))}
+            <Link href="/about" className={btn}>
+              About Us
+            </Link>
+            <Link href="/contact" className={btn}>
+              Contact Us
+            </Link>
             {isProfile ? (
               <>
                 <Link href="/help" className={btn}>
                   Support
-                </Link>
-                <Link href="/developers" className={btn}>
-                  Developers
                 </Link>
               </>
             ) : null}
@@ -135,6 +138,13 @@ export function Footer() {
                   {footerLinks.resources.map((item) => (
                     <li key={item.name}><Link href={item.href} className="hover:text-white">{item.name}</Link></li>
                   ))}
+                </ul>
+              </div>
+              <div>
+                <h3 className="text-xs font-semibold uppercase tracking-[0.24em] text-slate-400">Company</h3>
+                <ul className="mt-4 space-y-3 text-sm text-slate-200">
+                  <li><Link href="/about" className="hover:text-white">About Us</Link></li>
+                  <li><Link href="/contact" className="hover:text-white">Contact Us</Link></li>
                 </ul>
               </div>
               <div>
