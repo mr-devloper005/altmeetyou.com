@@ -89,20 +89,7 @@ export default function ContactPage() {
               </div>
             ))}
 
-            <div className="rounded-[16px] border border-slate-200/80 bg-white p-6">
-              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-slate-500">Other ways to reach us</p>
-              <div className="mt-4 grid gap-3 text-sm text-slate-700">
-                <div className="flex items-center gap-3">
-                  <Mail className="h-4 w-4 text-[#2156CC]" />
-                  <span>support@{SITE_CONFIG.domain}</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <MapPin className="h-4 w-4 text-[#2156CC]" />
-                  <span>Remote — distributed worldwide</span>
-                </div>
-              </div>
-            </div>
-          </div>
+                      </div>
 
           {/* Form */}
           <div className="rounded-[20px] border border-slate-200/80 bg-white p-7 shadow-[0_24px_64px_rgba(15,23,42,0.06)]">
