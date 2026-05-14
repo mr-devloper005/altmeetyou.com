@@ -1,56 +1,142 @@
-import { Mail, MessageSquareText, ShieldCheck } from 'lucide-react';
+'use client'
 
-import { ContactLeadForm } from '@/components/shared/contact-lead-form';
-import { Footer } from '@/components/shared/footer';
-import { NavbarShell } from '@/components/shared/navbar-shell';
+import { useState, type FormEvent } from 'react'
+import Link from 'next/link'
+import { ArrowRight, CheckCircle2, Clock, Mail, MapPin, MessageSquare, Sparkles, User } from 'lucide-react'
+import { NavbarShell } from '@/components/shared/navbar-shell'
+import { Footer } from '@/components/shared/footer'
+import { SITE_CONFIG } from '@/lib/site-config'
+import { CONTACT_PAGE_OVERRIDE_ENABLED, ContactPageOverride } from '@/overrides/contact-page'
+import { ContactLeadForm } from "@/components/shared/contact-lead-form";
 
-const siteName = process.env.NEXT_PUBLIC_SITE_NAME || 'Altmeetyou';
+const primaryBlue = 'bg-[#2156CC] hover:bg-[#1a4aad] text-white'
 
-const contactHighlights = [
-  { icon: Mail, title: 'Direct response', copy: 'Your message is saved securely and routed to the right team.' },
-  { icon: MessageSquareText, title: 'Clear details', copy: 'Share your requirement, question, or collaboration idea in one place.' },
-  { icon: ShieldCheck, title: 'Reliable follow-up', copy: 'We keep the request record so every conversation stays traceable.' },
-];
+const lanes = [
+  {
+    icon: User,
+    title: 'Profile and account',
+    body: 'Help with your public page, links, sign-in, and account settings.',
+    badge: 'Avg. reply: a few hours',
+  },
+  {
+    icon: MessageSquare,
+    title: 'Partnerships',
+    body: 'Integrations, media, and collaboration opportunities.',
+    badge: 'Avg. reply: 1 business day',
+  },
+  {
+    icon: Sparkles,
+    title: 'Product feedback',
+    body: 'Ideas for the profile experience and what you want to see next.',
+    badge: 'We read everything',
+  },
+]
+
+const reasons = [
+  'General question',
+  'Profile or account help',
+  'Partnership or media',
+  'Bug or feedback',
+] as const
 
 export default function ContactPage() {
+  if (CONTACT_PAGE_OVERRIDE_ENABLED) {
+    return <ContactPageOverride />
+  }
+
+  const [submitted, setSubmitted] = useState(false)
+
+  function onSubmit(e: FormEvent) {
+    e.preventDefault()
+    setSubmitted(true)
+  }
+
   return (
-    <div className="min-h-screen bg-[#f7f1e8] text-stone-950">
+    <div className="min-h-screen bg-white">
       <NavbarShell />
-      <main>
-        <section className="relative overflow-hidden px-6 py-20 md:px-10 lg:px-16">
-          <div className="absolute left-[-10%] top-10 h-72 w-72 rounded-full bg-amber-200/40 blur-3xl" />
-          <div className="absolute bottom-0 right-[-8%] h-80 w-80 rounded-full bg-stone-300/50 blur-3xl" />
 
-          <div className="relative mx-auto grid max-w-6xl gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
-            <div>
-              <p className="text-sm font-black uppercase tracking-[0.35em] text-stone-500">Contact</p>
-              <h1 className="mt-5 max-w-3xl text-5xl font-black leading-[0.95] tracking-[-0.06em] text-stone-950 md:text-7xl">
-                Let&apos;s talk about your next move.
-              </h1>
-              <p className="mt-6 max-w-2xl text-lg leading-8 text-stone-700">
-                Use this form to reach {siteName}. Your request will be recorded and shared with the support team for follow-up.
-              </p>
+      {/* Hero */}
+      <section className="relative overflow-hidden bg-[linear-gradient(105deg,#E8D5C4_0%,#c9a88a_45%,#B08968_100%)]">
+        <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
+          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-white/85">Contact us</p>
+          <h1 className="mt-3 max-w-3xl text-4xl font-bold leading-[1.1] tracking-[-0.04em] text-white sm:text-5xl lg:text-6xl">
+            Talk to a human at {SITE_CONFIG.name}.
+          </h1>
+          <p className="mt-5 max-w-2xl text-base leading-8 text-white/95">
+            Tell us what you are working on, what is broken, or what you would love to see — we read every message.
+          </p>
+        </div>
+      </section>
 
-              <div className="mt-8 grid gap-4">
-                {contactHighlights.map((item) => (
-                  <div key={item.title} className="flex gap-4 rounded-3xl border border-stone-200 bg-white/60 p-5 shadow-sm">
-                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-stone-950 text-white">
-                      <item.icon className="h-5 w-5" />
-                    </div>
-                    <div>
-                      <h2 className="text-base font-black text-stone-950">{item.title}</h2>
-                      <p className="mt-1 text-sm leading-6 text-stone-600">{item.copy}</p>
+      {/* Lanes + form */}
+      <section className="bg-[#FDF5E6] py-16">
+        <div className="mx-auto grid max-w-7xl gap-8 px-4 sm:px-6 lg:grid-cols-[0.95fr_1.05fr] lg:px-8">
+          {/* Lanes */}
+          <div className="space-y-5">
+            {lanes.map((lane) => (
+              <div key={lane.title} className="rounded-[16px] border border-slate-200/80 bg-white p-6 shadow-[0_12px_36px_rgba(15,23,42,0.05)]">
+                <div className="flex items-start gap-4">
+                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-[10px] bg-[#EAF1FF] text-[#2156CC]">
+                    <lane.icon className="h-5 w-5" />
+                  </div>
+                  <div className="min-w-0">
+                    <h2 className="text-lg font-bold text-slate-950">{lane.title}</h2>
+                    <p className="mt-1 text-sm leading-6 text-slate-600">{lane.body}</p>
+                    <div className="mt-3 inline-flex items-center gap-1.5 rounded-full bg-slate-100 px-2.5 py-1 text-[11px] font-medium text-slate-600">
+                      <Clock className="h-3 w-3" /> {lane.badge}
                     </div>
                   </div>
-                ))}
+                </div>
               </div>
-            </div>
+            ))}
 
-            <ContactLeadForm />
+                      </div>
+
+          {/* Form */}
+          <div className="rounded-[20px] border border-slate-200/80 bg-white p-7 shadow-[0_24px_64px_rgba(15,23,42,0.06)]">
+            {submitted ? (
+              <div className="flex flex-col items-center gap-3 py-12 text-center">
+                <CheckCircle2 className="h-10 w-10 text-emerald-500" />
+                <h2 className="text-2xl font-bold text-slate-950">Message sent</h2>
+                <p className="max-w-sm text-sm text-slate-600">
+                  Thanks for reaching out. We will reply to your email shortly.
+                </p>
+                <button
+                  type="button"
+                  onClick={() => setSubmitted(false)}
+                  className={`mt-2 inline-flex items-center gap-2 rounded-[10px] px-5 py-2.5 text-sm font-semibold ${primaryBlue}`}
+                >
+                  Send another message
+                </button>
+              </div>
+            ) : (
+              <>
+                <h2 className="text-2xl font-bold text-slate-950">Send us a message</h2>
+                <p className="mt-1 text-sm text-slate-500">We typically reply within a business day.</p>
+
+                <ContactLeadForm />
+              </>
+            )}
           </div>
-        </section>
-      </main>
+        </div>
+      </section>
+
+      {/* Help nudge */}
+      <section className="bg-white py-16">
+        <div className="mx-auto flex max-w-4xl flex-col items-center gap-3 px-4 text-center sm:px-6">
+          <h2 className="text-2xl font-bold tracking-[-0.03em] text-slate-950 sm:text-3xl">Looking for a quick answer?</h2>
+          <p className="max-w-xl text-sm text-slate-600">
+            Most questions are answered in our help center. Browse common topics and FAQs first — you might find the answer in a
+            few seconds.
+          </p>
+          <Link href="/help" className="mt-2 inline-flex items-center gap-2 rounded-[10px] border border-slate-300 bg-white px-5 py-2.5 text-sm font-semibold text-[#2156CC] hover:bg-slate-50">
+            Visit support center
+            <ArrowRight className="h-4 w-4" />
+          </Link>
+        </div>
+      </section>
+
       <Footer />
     </div>
-  );
+  )
 }
